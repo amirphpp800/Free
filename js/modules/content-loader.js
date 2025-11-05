@@ -30,7 +30,7 @@ export async function loadSuggestedNotes() {
       </li>
     `).join('');
   } catch (error) {
-    console.error('Error loading suggested notes:', error);
+    console.info('ℹ️ Suggested notes not loaded (optional)');
   }
 }
 
@@ -68,17 +68,26 @@ export async function loadFeaturedArticle() {
       featuredMedia.style.backgroundImage = `url(${featured.image})`;
     }
   } catch (error) {
-    console.error('Error loading featured article:', error);
+    console.info('ℹ️ Featured article not loaded (optional)');
   }
 }
 
 // بارگذاری ابزارها
 export async function loadTools() {
   try {
-    const response = await fetch('/api/tools');
-    const tools = await response.json();
+    // بارگذاری از JSON
+    const response = await fetch('/data/tools.json');
     
-    if (tools.length === 0) return;
+    // بررسی وضعیت پاسخ
+    if (!response.ok) {
+      console.log('Tools data not available, skipping...');
+      return;
+    }
+    
+    const data = await response.json();
+    const tools = data.tools || [];
+    
+    if (!tools || tools.length === 0) return;
     
     // تفکیک ابزارها بر اساس دسته‌بندی
     const gamingTools = tools.filter(t => t.category === 'gaming');
@@ -102,7 +111,8 @@ export async function loadTools() {
       link.href = '/tools';
     });
   } catch (error) {
-    console.error('Error loading tools:', error);
+    // خطا را سایلنت کن - ابزارها اختیاری هستند
+    console.info('ℹ️ Tools not loaded (optional)');
   }
 }
 

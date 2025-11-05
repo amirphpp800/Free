@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <title>پاک کردن کش - ابزارستان</title>
+  <style>
+    body {
+      font-family: system-ui, -apple-system, sans-serif;
+      background: #0a0a0f;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      margin: 0;
+      padding: 20px;
+      text-align: center;
+    }
+    .container {
+      max-width: 500px;
+    }
+    h1 { color: #9D0913; margin-bottom: 20px; }
+    button {
+      background: #9D0913;
+      color: white;
+      border: none;
+      padding: 15px 30px;
+      border-radius: 10px;
+      font-size: 16px;
+      cursor: pointer;
+      margin: 10px;
+    }
+    button:hover { opacity: 0.9; }
+    .status {
+      margin-top: 20px;
+      padding: 15px;
+      border-radius: 10px;
+      background: rgba(255,255,255,0.05);
+    }
+    .success { color: #4ade80; }
+    .info { color: #60a5fa; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>🧹 پاک کردن کش</h1>
+    <p>برای حل مشکلات بارگذاری، کش مرورگر را پاک کنید</p>
+    
+    <button onclick="clearAllCache()">پاک کردن کش و رفرش</button>
+    <button onclick="hardReload()">رفرش سخت (Ctrl+Shift+R)</button>
+    <button onclick="goHome()">بازگشت به صفحه اصلی</button>
+    
+    <div class="status" id="status"></div>
+  </div>
+
+  <script>
+    const statusEl = document.getElementById('status');
+
+    async function clearAllCache() {
+      statusEl.innerHTML = '<div class="info">در حال پاک کردن کش...</div>';
+      
+      try {
+        // پاک کردن Service Worker cache
+        if ('serviceWorker' in navigator) {
+          const registration = await navigator.serviceWorker.getRegistration();
+          if (registration) {
+            await registration.unregister();
+            statusEl.innerHTML += '<div class="success">✅ Service Worker حذف شد</div>';
+          }
+        }
+
+        // پاک کردن همه کش‌ها
+        if ('caches' in window) {
+          const cacheNames = await caches.keys();
+          await Promise.all(cacheNames.map(name => caches.delete(name)));
+          statusEl.innerHTML += '<div class="success">✅ کش‌ها پاک شدند</div>';
+        }
+
+        // پاک کردن localStorage
+        localStorage.clear();
+        sessionStorage.clear();
+        statusEl.innerHTML += '<div class="success">✅ Storage پاک شد</div>';
+
+        statusEl.innerHTML += '<div class="success">✅ تمام! صفحه رفرش می‌شود...</div>';
+        
+        setTimeout(() => {
+          window.location.href = '/';
+        }, 1500);
+      } catch (error) {
+        statusEl.innerHTML += '<div style="color: #f87171;">❌ خطا: ' + error.message + '</div>';
+      }
+    }
+
+    function hardReload() {
+      statusEl.innerHTML = '<div class="info">رفرش سخت...</div>';
+      setTimeout(() => {
+        window.location.reload(true);
+      }, 500);
+    }
+
+    function goHome() {
+      window.location.href = '/';
+    }
+
+    // نمایش وضعیت فعلی
+    window.addEventListener('load', async () => {
+      let info = '<div class="info">وضعیت فعلی:</div>';
+      
+      if ('serviceWorker' in navigator) {
+        const registration = await navigator.serviceWorker.getRegistration();
+        info += registration ? 
+          '<div>🔵 Service Worker: فعال</div>' : 
+          '<div>⚪ Service Worker: غیرفعال</div>';
+      }
+
+      if ('caches' in window) {
+        const cacheNames = await caches.keys();
+        info += `<div>📦 تعداد کش: ${cacheNames.length}</div>`;
+      }
+
+      statusEl.innerHTML = info;
+    });
+  </script>
+</body>
+</html>

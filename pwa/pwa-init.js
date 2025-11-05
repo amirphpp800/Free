@@ -13,6 +13,12 @@ if ('serviceWorker' in navigator) {
 // ثبت Service Worker
 async function registerServiceWorker() {
   try {
+    // بررسی اینکه آیا در محیط مناسب هستیم
+    if (location.protocol !== 'https:' && location.hostname !== 'localhost' && location.hostname !== '127.0.0.1') {
+      console.log('⚠️ Service Worker requires HTTPS or localhost');
+      return;
+    }
+
     const registration = await navigator.serviceWorker.register('/pwa/sw.js', {
       scope: '/'
     });
@@ -49,7 +55,7 @@ async function registerServiceWorker() {
     });
 
   } catch (error) {
-    console.error('❌ Service Worker registration failed:', error);
+    console.warn('⚠️ Service Worker not available:', error.message);
   }
 }
 
