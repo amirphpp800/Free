@@ -233,6 +233,34 @@
   opacity: 0.8;
 }
 
+/* Dynamic Tags */
+.article-heading {
+  font-size: 1.75rem;
+  font-weight: 800;
+  color: #ffffff;
+  margin: var(--space-2xl) 0 var(--space-lg) 0;
+  padding-bottom: var(--space-sm);
+  border-bottom: 3px solid var(--red);
+  display: inline-block;
+}
+
+.article-subheading {
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: #ffffff;
+  margin: var(--space-xl) 0 var(--space-md) 0;
+}
+
+.article-strong {
+  font-weight: 700;
+  color: var(--red);
+}
+
+.article-em {
+  font-style: italic;
+  color: var(--accent);
+}
+
 /* Quote */
 .article-quote {
   position: relative;
