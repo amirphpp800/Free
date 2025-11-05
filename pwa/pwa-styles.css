@@ -1,0 +1,365 @@
+/* ========================================
+   PWA Styles
+   استایل‌های مربوط به Progressive Web App
+   ======================================== */
+
+/* نوتیفیکیشن نصب PWA */
+.pwa-install-notification {
+  position: fixed;
+  bottom: -200px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  padding: var(--space-md);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+  z-index: 10000;
+  max-width: 90%;
+  width: 480px;
+  transition: bottom 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.pwa-install-notification.show {
+  bottom: var(--space-lg);
+}
+
+.pwa-install-content {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+  position: relative;
+}
+
+.pwa-install-icon {
+  width: 48px;
+  height: 48px;
+  background: linear-gradient(135deg, #9D0913, #c00b17);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.pwa-install-icon svg {
+  color: white;
+  animation: bounce 2s infinite;
+}
+
+.pwa-install-text {
+  flex: 1;
+}
+
+.pwa-install-text strong {
+  display: block;
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--txt);
+  margin-bottom: 4px;
+}
+
+.pwa-install-text p {
+  font-size: 0.875rem;
+  color: var(--muted);
+  margin: 0;
+}
+
+.pwa-install-actions {
+  display: flex;
+  gap: var(--space-xs);
+  flex-shrink: 0;
+}
+
+.pwa-install-close {
+  position: absolute;
+  top: -8px;
+  left: -8px;
+  width: 28px;
+  height: 28px;
+  background: var(--panel-2);
+  border: 1px solid var(--line);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 1.2rem;
+  color: var(--muted);
+  transition: all 0.2s ease;
+}
+
+.pwa-install-close:hover {
+  background: var(--bg-soft);
+  color: var(--txt);
+  transform: scale(1.1);
+}
+
+@keyframes bounce {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-3px);
+  }
+}
+
+/* نوتیفیکیشن به‌روزرسانی */
+.pwa-update-notification {
+  position: fixed;
+  bottom: -100px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  padding: var(--space-md) var(--space-lg);
+  box-shadow: var(--shadow-xl);
+  z-index: 10000;
+  max-width: 90%;
+  width: 400px;
+  transition: bottom 0.3s ease-out;
+}
+
+.pwa-update-notification.show {
+  bottom: var(--space-lg);
+}
+
+.pwa-notification-content p {
+  margin: 0 0 var(--space-sm) 0;
+  font-weight: 600;
+  color: var(--txt);
+}
+
+.pwa-notification-actions {
+  display: flex;
+  gap: var(--space-sm);
+  justify-content: flex-end;
+}
+
+/* Toast نوتیفیکیشن‌ها */
+.pwa-toast {
+  position: fixed;
+  top: -100px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--panel);
+  border: 1px solid var(--line);
+  padding: 12px 24px;
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-lg);
+  z-index: 10001;
+  font-weight: 600;
+  transition: top 0.3s ease-out;
+  max-width: 90%;
+  text-align: center;
+}
+
+.pwa-toast.show {
+  top: var(--space-lg);
+}
+
+.pwa-toast-success {
+  border-color: #10b981;
+  background: linear-gradient(135deg, rgba(16, 185, 129, 0.1), var(--panel));
+}
+
+.pwa-toast-warning {
+  border-color: var(--orange);
+  background: linear-gradient(135deg, rgba(255, 122, 26, 0.1), var(--panel));
+}
+
+.pwa-toast-error {
+  border-color: var(--red);
+  background: linear-gradient(135deg, rgba(224, 47, 58, 0.1), var(--panel));
+}
+
+.pwa-toast-info {
+  border-color: #3b82f6;
+  background: linear-gradient(135deg, rgba(59, 130, 246, 0.1), var(--panel));
+}
+
+/* استایل‌های خاص PWA نصب شده */
+.pwa-installed .site-header {
+  padding-top: env(safe-area-inset-top);
+}
+
+.pwa-installed .site-footer {
+  padding-bottom: env(safe-area-inset-bottom);
+}
+
+/* لودینگ آفلاین */
+.pwa-offline-indicator {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  background: linear-gradient(135deg, rgba(255, 122, 26, 0.95), rgba(224, 47, 58, 0.95));
+  color: white;
+  text-align: center;
+  padding: 8px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  z-index: 9999;
+  transform: translateY(-100%);
+  transition: transform 0.3s ease-out;
+}
+
+.pwa-offline-indicator.show {
+  transform: translateY(0);
+}
+
+/* اسپلش اسکرین */
+.pwa-splash {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, #0a0a0f 0%, #1a1a2e 100%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 99999;
+  opacity: 1;
+  transition: opacity 0.5s ease-out;
+}
+
+.pwa-splash.hide {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.pwa-splash-logo {
+  width: 120px;
+  height: 120px;
+  margin-bottom: var(--space-lg);
+  animation: pulse 2s infinite;
+}
+
+.pwa-splash-text {
+  color: white;
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: var(--space-sm);
+}
+
+.pwa-splash-loader {
+  width: 40px;
+  height: 40px;
+  border: 3px solid rgba(255, 255, 255, 0.1);
+  border-top-color: var(--orange);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.05);
+    opacity: 0.8;
+  }
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+  .pwa-install-notification {
+    width: calc(100% - 32px);
+    padding: var(--space-sm);
+  }
+  
+  .pwa-install-content {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-sm);
+  }
+  
+  .pwa-install-icon {
+    width: 40px;
+    height: 40px;
+  }
+  
+  .pwa-install-text strong {
+    font-size: 0.95rem;
+  }
+  
+  .pwa-install-text p {
+    font-size: 0.8rem;
+  }
+  
+  .pwa-install-actions {
+    width: 100%;
+    justify-content: flex-end;
+  }
+  
+  .pwa-update-notification {
+    width: calc(100% - 32px);
+    padding: var(--space-sm) var(--space-md);
+  }
+  
+  .pwa-notification-content p {
+    font-size: 0.9rem;
+  }
+  
+  .pwa-toast {
+    font-size: 0.9rem;
+    padding: 10px 20px;
+  }
+}
+
+/* حالت تمام صفحه */
+@media (display-mode: standalone) {
+  body {
+    user-select: none;
+    -webkit-user-select: none;
+    -webkit-touch-callout: none;
+  }
+  
+  /* جلوگیری از pull-to-refresh در iOS */
+  body {
+    overscroll-behavior-y: contain;
+  }
+}
+
+/* حالت تاریک خاص PWA */
+@media (prefers-color-scheme: dark) {
+  .pwa-splash {
+    background: linear-gradient(135deg, #000000 0%, #0a0a1f 100%);
+  }
+}
+
+/* انیمیشن بارگذاری */
+.pwa-loading {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  border-top-color: currentColor;
+  animation: spin 0.8s linear infinite;
+}
+
+/* Badge نوتیفیکیشن */
+.pwa-badge {
+  position: absolute;
+  top: -4px;
+  left: -4px;
+  background: var(--red);
+  color: white;
+  font-size: 0.7rem;
+  font-weight: 700;
+  padding: 2px 6px;
+  border-radius: 10px;
+  min-width: 18px;
+  text-align: center;
+}

@@ -1,0 +1,438 @@
+/* ========================================
+   Card Components
+   ======================================== */
+
+/* Promo Cards Grid */
+.promo {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-md);
+  margin: var(--space-lg) 0;
+}
+
+.promo-card {
+  position: relative;
+  border-radius: 20px;
+  background: var(--panel);
+  border: none;
+  overflow: hidden;
+  min-height: 110px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-md) var(--space-lg);
+  gap: var(--space-md);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+
+.promo-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+}
+
+.promo-iran {
+  background: linear-gradient(135deg, rgba(15, 18, 35, 0.95) 0%, rgba(25, 28, 48, 0.9) 100%);
+  border: 1px solid rgba(80, 90, 150, 0.1);
+  backdrop-filter: blur(10px);
+}
+
+.promo-iran:hover {
+  border-color: rgba(80, 90, 150, 0.2);
+  box-shadow: 0 8px 32px rgba(60, 70, 120, 0.15);
+}
+
+.promo-iran:hover .promo-icon-wrapper {
+  transform: scale(1.05) rotate(5deg);
+}
+
+.promo-iran:hover .promo-arrow {
+  transform: translateX(-4px);
+}
+
+/* Promo Podcast Card */
+.promo-podcast {
+  background: linear-gradient(135deg, rgba(20, 15, 12, 0.95) 0%, rgba(35, 25, 20, 0.9) 100%);
+  border: 1px solid rgba(120, 60, 50, 0.1);
+  backdrop-filter: blur(10px);
+}
+
+.promo-podcast:hover {
+  border-color: rgba(120, 60, 50, 0.2);
+  box-shadow: 0 8px 32px rgba(100, 50, 40, 0.15);
+}
+
+.promo-podcast:hover .promo-icon-wrapper {
+  transform: scale(1.05) rotate(-5deg);
+}
+
+.promo-podcast:hover .promo-arrow {
+  transform: translateX(-4px);
+}
+
+/* دکمه فلش */
+.promo-arrow {
+  flex-shrink: 0;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.1rem;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  order: 1;
+}
+
+.promo-iran .promo-arrow {
+  background: rgba(255, 255, 255, 0.1);
+  color: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.promo-iran .promo-arrow:hover {
+  background: rgba(255, 255, 255, 0.15);
+  border-color: rgba(255, 255, 255, 0.3);
+}
+
+.promo-podcast .promo-arrow {
+  background: rgba(157, 9, 19, 0.2);
+  color: #ffffff;
+  border: 1px solid rgba(157, 9, 19, 0.3);
+}
+
+.promo-podcast .promo-arrow:hover {
+  background: rgba(157, 9, 19, 0.3);
+  border-color: rgba(157, 9, 19, 0.5);
+}
+
+/* آیکون/تصویر کارت‌ها */
+.promo-icon-wrapper {
+  flex-shrink: 0;
+  width: 60px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 16px;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(5px);
+  order: 3;
+}
+
+.promo-banner-image,
+.promo-logo {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  padding: 12px;
+}
+
+/* محتوای کارت */
+.promo-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+  order: 2;
+}
+
+.promo-card h3 {
+  margin: 0;
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: #ffffff;
+  letter-spacing: -0.02em;
+  line-height: 1.3;
+}
+
+.promo-card p {
+  margin: 0;
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 0.8rem;
+  line-height: 1.4;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.promo-actions {
+  display: flex;
+  gap: var(--space-sm);
+  margin-top: var(--space-md);
+}
+
+/* Featured Card */
+.featured-card {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-2xl);
+  box-shadow: var(--shadow-lg);
+  overflow: hidden;
+  transition: all var(--transition-base);
+}
+
+.featured-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-xl);
+}
+
+.featured-media {
+  height: 240px;
+  background:
+    radial-gradient(800px 300px at 100% 0%, rgba(155, 135, 245, 0.18), transparent 60%),
+    radial-gradient(700px 260px at 0% 100%, rgba(224, 47, 58, 0.18), transparent 60%),
+    url('https://picsum.photos/seed/cover/1200/600') center/cover no-repeat;
+  position: relative;
+}
+
+.featured-body {
+  padding: var(--space-lg) 28px 28px;
+}
+
+.badge-row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  margin-bottom: var(--space-sm);
+  flex-wrap: wrap;
+}
+
+.badge {
+  background: #101012;
+  border: 1px solid var(--line);
+  padding: 6px 12px;
+  border-radius: var(--radius-sm);
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.reading-time {
+  color: var(--muted);
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+  font-size: 0.9rem;
+}
+
+.reading-time .dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--red);
+  display: inline-block;
+}
+
+.featured-card h2 {
+  margin: var(--space-xs) 0 var(--space-sm) 0;
+  font-size: 1.5rem;
+  font-weight: 800;
+  line-height: 1.4;
+}
+
+.featured-card p {
+  margin: 0 0 var(--space-md) 0;
+  color: var(--muted);
+  line-height: 1.6;
+}
+
+/* Tool Cards */
+.tool-card {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  padding: var(--space-lg);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  transition: all var(--transition-base);
+}
+
+.tool-card:hover {
+  transform: translateY(-4px);
+  border-color: var(--muted);
+  box-shadow: var(--shadow-md);
+}
+
+.tool-card h4 {
+  font-size: 1.05rem;
+  font-weight: 700;
+  margin: 0;
+}
+
+.tool-card p {
+  color: var(--muted);
+  font-size: 0.9rem;
+  line-height: 1.5;
+  margin: 0;
+  flex: 1;
+}
+
+.tool-icon {
+  font-size: 24px;
+  background: var(--panel-2);
+  border: 1px solid var(--line);
+  width: 40px;
+  height: 40px;
+  border-radius: 14px;
+  display: grid;
+  place-items: center;
+  transition: all var(--transition-base);
+}
+
+.tool-card:hover .tool-icon {
+  background: var(--bg-soft);
+  transform: scale(1.05);
+}
+
+/* Note Cards */
+.note-item {
+  display: flex;
+  gap: 14px;
+  align-items: center;
+  background: var(--panel-2);
+  border: 1px solid var(--line);
+  padding: var(--space-sm);
+  border-radius: 14px;
+  transition: all var(--transition-base);
+  cursor: pointer;
+}
+
+.note-item:hover {
+  background: var(--bg-soft);
+  border-color: var(--muted);
+  transform: translateX(-2px);
+}
+
+.note-item:hover h4 {
+  color: var(--red);
+}
+
+.note-item h4 {
+  margin: 0 0 6px 0;
+  font-size: 0.95rem;
+  font-weight: 600;
+  line-height: 1.4;
+  transition: color 0.2s ease;
+}
+
+.note-item time {
+  color: var(--muted);
+  font-size: 0.85rem;
+}
+
+.note-item img {
+  width: 56px;
+  height: 56px;
+  border-radius: var(--radius-md);
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+  .promo {
+    grid-template-columns: 1fr;
+  }
+  
+  .promo-card {
+    padding: var(--space-sm) var(--space-md);
+    min-height: 100px;
+  }
+  
+  .promo-icon-wrapper {
+    width: 50px;
+    height: 50px;
+  }
+  
+  .promo-card h3 {
+    font-size: 1.05rem;
+  }
+  
+  .promo-card p {
+    font-size: 0.75rem;
+  }
+  
+  .promo-arrow {
+    width: 36px;
+    height: 36px;
+    font-size: 1rem;
+  }
+  
+  .featured-media {
+    height: 200px;
+  }
+  
+  .featured-card h2 {
+    font-size: 1.35rem;
+  }
+}
+
+@media (max-width: 600px) {
+  .promo-card {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    text-align: center;
+    padding: var(--space-md);
+    gap: var(--space-sm);
+    min-height: 140px;
+  }
+  
+  .promo-icon-wrapper {
+    width: 56px;
+    height: 56px;
+    order: 1;
+  }
+  
+  .promo-arrow {
+    order: 2;
+    width: 36px;
+    height: 36px;
+    font-size: 0.95rem;
+  }
+  
+  .promo-content {
+    order: 3;
+    width: 100%;
+    align-items: center;
+  }
+  
+  .promo-card h3 {
+    font-size: 1.05rem;
+  }
+  
+  .promo-card p {
+    font-size: 0.8rem;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+  }
+  
+  .featured-body {
+    padding: var(--space-md) var(--space-lg) var(--space-lg);
+  }
+  
+  .featured-card h2 {
+    font-size: 1.25rem;
+  }
+  
+  .featured-media {
+    height: 180px;
+  }
+  
+  .tool-card {
+    padding: var(--space-md);
+  }
+  
+  .note-item img {
+    width: 48px;
+    height: 48px;
+  }
+}

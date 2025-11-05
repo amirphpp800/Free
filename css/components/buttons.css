@@ -1,0 +1,146 @@
+/* ========================================
+   Button Components
+   ======================================== */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-xs);
+  border: 0;
+  cursor: pointer;
+  padding: 12px 20px;
+  border-radius: var(--radius-md);
+  font-weight: 700;
+  font-size: 0.95rem;
+  transition: all var(--transition-base);
+  font-family: inherit;
+  text-align: center;
+  white-space: nowrap;
+}
+
+.btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.btn:active:not(:disabled) {
+  transform: scale(0.98);
+}
+
+/* Button variants */
+.btn-orange {
+  background: var(--orange);
+  color: #120a02;
+  font-weight: 700;
+}
+
+.btn-orange:hover:not(:disabled) {
+  background: #ff8c3a;
+  box-shadow: 0 4px 12px rgba(255, 122, 26, 0.3);
+  transform: translateX(-4px);
+}
+
+/* Orange/Red button in promo cards */
+.promo-card .btn-orange,
+.promo-card .btn-red {
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border-radius: 50%;
+  font-size: 1.2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 12px rgba(157, 9, 19, 0.4);
+}
+
+.promo-card .btn-orange:hover:not(:disabled),
+.promo-card .btn-red:hover:not(:disabled) {
+  transform: translateX(-6px) scale(1.05);
+  box-shadow: 0 6px 20px rgba(157, 9, 19, 0.5);
+}
+
+.btn-red {
+  background: var(--red);
+  color: #fff;
+}
+
+.btn-red:hover:not(:disabled) {
+  background: #000;
+  color: #fff;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.5);
+}
+
+.btn-outline {
+  background: transparent;
+  color: var(--txt);
+  border: 1px solid var(--line);
+}
+
+.btn-outline:hover:not(:disabled) {
+  background: var(--panel-2);
+  border-color: var(--muted);
+}
+
+.btn-ghost {
+  background: transparent;
+  color: var(--muted);
+  padding: 8px 12px;
+}
+
+.btn-ghost:hover:not(:disabled) {
+  color: var(--txt);
+  background: var(--panel);
+}
+
+.btn-white {
+  background: rgba(255, 255, 255, 0.98);
+  color: #0f1035;
+  width: 52px;
+  height: 52px;
+  padding: 0;
+  border-radius: 50%;
+  font-size: 1.3rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(10px);
+}
+
+.btn-white:hover:not(:disabled) {
+  background: #ffffff;
+  transform: translateX(-6px) scale(1.05);
+  box-shadow: 0 6px 20px rgba(255, 255, 255, 0.4);
+}
+
+/* Button sizes */
+.btn-sm {
+  padding: 8px 14px;
+  font-size: 0.875rem;
+}
+
+.btn-lg {
+  padding: 14px 24px;
+  font-size: 1rem;
+}
+
+/* Button with icon */
+.btn-icon {
+  padding: 10px;
+  width: 40px;
+  height: 40px;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+  .btn {
+    padding: 10px 16px;
+    font-size: 0.9rem;
+  }
+  
+  .btn-lg {
+    padding: 12px 20px;
+  }
+}

@@ -1,0 +1,54 @@
+{
+  "name": "ابزارستان - مرجع ابزارهای گیمینگ و کاربردی",
+  "short_name": "ابزارستان",
+  "description": "مرجع کامل ابزارهای گیمینگ و کاربردی با قابلیت استفاده آفلاین",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "theme_color": "#0a0a0f",
+  "background_color": "#0a0a0f",
+  "dir": "rtl",
+  "lang": "fa",
+  "icons": [
+    {
+      "src": "/pwa/icons/256.png",
+      "sizes": "256x256",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/pwa/icons/512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["utilities", "tools", "gaming"],
+  "shortcuts": [
+    {
+      "name": "ابزارها",
+      "short_name": "ابزارها",
+      "description": "مشاهده لیست ابزارها",
+      "url": "/tools",
+      "icons": [
+        {
+          "src": "/pwa/icons/256.png",
+          "sizes": "256x256"
+        }
+      ]
+    },
+    {
+      "name": "وبلاگ",
+      "short_name": "وبلاگ",
+      "description": "مطالعه مقالات",
+      "url": "/blog",
+      "icons": [
+        {
+          "src": "/pwa/icons/256.png",
+          "sizes": "256x256"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>پنل مدیریت - ابزارستان</title>
+  <link rel="stylesheet" href="../css/main.css" />
+  <link rel="stylesheet" href="./admin.css" />
+</head>
+<body>
+  <!-- Login Screen -->
+  <div id="loginScreen" class="login-container">
+    <div class="login-box">
+      <div class="login-logo">
+        <img src="../assest/logo/logo.svg" alt="ابزارستان" width="60" />
+      </div>
+      <h1>🔐 ورود به پنل مدیریت</h1>
+      <div id="loginAlert"></div>
+      <form id="loginForm">
+        <div class="form-group">
+          <label>نام کاربری</label>
+          <input type="text" id="username" required autocomplete="username" />
+        </div>
+        <div class="form-group">
+          <label>رمز عبور</label>
+          <input type="password" id="password" required autocomplete="current-password" />
+        </div>
+        <button type="submit" class="btn btn-red" style="width: 100%;">ورود به پنل</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Admin Panel -->
+  <div id="adminPanel" style="display: none;">
+    <!-- Sidebar -->
+    <aside class="admin-sidebar">
+      <div class="sidebar-header">
+        <img src="../assest/logo/logo.svg" alt="ابزارستان" width="40" />
+        <h2>ابزارستان</h2>
+      </div>
+      
+      <nav class="sidebar-nav">
+        <button class="nav-item active" onclick="switchTab('dashboard')">
+          <span class="nav-icon">📊</span>
+          <span>داشبورد</span>
+        </button>
+        <button class="nav-item" onclick="switchTab('articles')">
+          <span class="nav-icon">📝</span>
+          <span>مقالات</span>
+        </button>
+        <button class="nav-item" onclick="switchTab('tools')">
+          <span class="nav-icon">🔧</span>
+          <span>ابزارها</span>
+        </button>
+        <button class="nav-item" onclick="switchTab('files')">
+          <span class="nav-icon">📁</span>
+          <span>فایل‌ها</span>
+        </button>
+        <button class="nav-item" onclick="switchTab('templates')">
+          <span class="nav-icon">📋</span>
+          <span>تمپلیت‌ها</span>
+        </button>
+        <button class="nav-item" onclick="switchTab('settings')">
+          <span class="nav-icon">⚙️</span>
+          <span>تنظیمات</span>
+        </button>
+      </nav>
+
+      <div class="sidebar-footer">
+        <button onclick="logout()" class="btn btn-ghost btn-sm">
+          <span>🚪</span>
+          خروج
+        </button>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="admin-main">
+      <!-- Header -->
+      <header class="admin-header">
+        <div>
+          <h1 id="pageTitle">داشبورد</h1>
+          <p id="pageSubtitle">مدیریت محتوا و سیستم</p>
+        </div>
+        <div class="header-actions">
+          <button class="btn btn-ghost btn-sm" onclick="refreshData()">
+            <span id="refreshIcon">🔄</span>
+            بروزرسانی
+          </button>
+        </div>
+      </header>
+
+      <!-- Dashboard Panel -->
+      <div id="dashboardPanel" class="admin-panel active">
+        <!-- Status Cards -->
+        <div class="status-grid">
+          <div class="status-card">
+            <div class="status-icon" style="background: rgba(34, 197, 94, 0.1); color: #22c55e;">✅</div>
+            <div class="status-info">
+              <h3 id="kvStatus">بررسی...</h3>
+              <p>وضعیت KV Database</p>
+            </div>
+          </div>
+
+          <div class="status-card">
+            <div class="status-icon" style="background: rgba(59, 130, 246, 0.1); color: #3b82f6;">🔐</div>
+            <div class="status-info">
+              <h3 id="envStatus">بررسی...</h3>
+              <p>Environment Variables</p>
+            </div>
+          </div>
+
+          <div class="status-card">
+            <div class="status-icon" style="background: rgba(168, 85, 247, 0.1); color: #a855f7;">📝</div>
+            <div class="status-info">
+              <h3 id="articlesCount">0</h3>
+              <p>تعداد مقالات</p>
+            </div>
+          </div>
+
+          <div class="status-card">
+            <div class="status-icon" style="background: rgba(251, 146, 60, 0.1); color: #fb923c;">🔧</div>
+            <div class="status-info">
+              <h3 id="toolsCount">0</h3>
+              <p>تعداد ابزارها</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quick Actions -->
+        <div class="admin-card">
+          <h2>دسترسی سریع</h2>
+          <div class="quick-actions">
+            <button class="quick-action" onclick="switchTab('articles')">
+              <span class="quick-icon">📝</span>
+              <span>مقاله جدید</span>
+            </button>
+            <button class="quick-action" onclick="switchTab('tools')">
+              <span class="quick-icon">🔧</span>
+              <span>ابزار جدید</span>
+            </button>
+            <button class="quick-action" onclick="switchTab('files')">
+              <span class="quick-icon">📤</span>
+              <span>آپلود فایل</span>
+            </button>
+            <button class="quick-action" onclick="switchTab('templates')">
+              <span class="quick-icon">📋</span>
+              <span>تمپلیت‌ها</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Recent Activity -->
+        <div class="admin-card">
+          <h2>آخرین فعالیت‌ها</h2>
+          <div id="recentActivity" class="activity-list">
+            <p style="color: var(--muted); text-align: center;">در حال بارگذاری...</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Articles Panel -->
+      <div id="articlesPanel" class="admin-panel">
+        <div class="panel-grid">
+          <div class="admin-card">
+            <h2>افزودن مقاله جدید</h2>
+            <form id="articleForm">
+              <div class="form-group">
+                <label>عنوان مقاله *</label>
+                <input type="text" id="articleTitle" required placeholder="عنوان جذاب و خواندنی" />
+              </div>
+              
+              <div class="form-group">
+                <label>خلاصه مقاله</label>
+                <textarea id="articleExcerpt" rows="2" placeholder="خلاصه‌ای کوتاه از محتوا (برای SEO)"></textarea>
+              </div>
+              
+              <div class="form-group">
+                <label>محتوای کامل *</label>
+                <textarea id="articleContent" rows="10" required placeholder="محتوای کامل مقاله با فرمت Markdown"></textarea>
+              </div>
+              
+              <div class="form-row">
+                <div class="form-group">
+                  <label>دسته‌بندی</label>
+                  <select id="articleCategory">
+                    <option value="فناوری">فناوری</option>
+                    <option value="امنیت">امنیت</option>
+                    <option value="VPN">VPN</option>
+                    <option value="آموزش">آموزش</option>
+                    <option value="اخبار">اخبار</option>
+                    <option value="عمومی">عمومی</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label>نویسنده</label>
+                  <input type="text" id="articleAuthor" placeholder="نام نویسنده" value="ابزارستان" />
+                </div>
+              </div>
+              
+              <div class="form-group">
+                <label>تگ‌ها (با کاما جدا کنید)</label>
+                <input type="text" id="articleTags" placeholder="vpn, امنیت, فیلترشکن, ..." />
+              </div>
+              
+              <div class="form-group">
+                <label>لینک تصویر شاخص</label>
+                <input type="url" id="articleImage" placeholder="https://example.com/image.jpg" />
+              </div>
+              
+              <div class="form-group">
+                <label style="display: flex; align-items: center; gap: 8px;">
+                  <input type="checkbox" id="articlePublished" checked />
+                  <span>انتشار فوری</span>
+                </label>
+              </div>
+              
+              <div id="articleAlert"></div>
+              <button type="submit" class="btn btn-red">انتشار مقاله</button>
+              <button type="button" class="btn btn-ghost" onclick="useTemplate('article')">استفاده از تمپلیت</button>
+            </form>
+          </div>
+
+          <div class="admin-card">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: var(--space-lg);">
+              <h2 style="margin: 0;">مقالات منتشر شده</h2>
+              <span id="articlesTotal" class="badge">0</span>
+            </div>
+            <div id="articlesList" class="items-list"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tools Panel -->
+      <div id="toolsPanel" class="admin-panel">
+        <div class="panel-grid">
+          <div class="admin-card">
+            <h2>افزودن ابزار جدید</h2>
+            <form id="toolForm">
+              <div class="form-group">
+                <label>نام ابزار *</label>
+                <input type="text" id="toolName" required placeholder="نام ابزار" />
+              </div>
+              
+              <div class="form-group">
+                <label>توضیحات</label>
+                <textarea id="toolDescription" rows="3" placeholder="توضیحات کوتاه درباره ابزار"></textarea>
+              </div>
+              
+              <div class="form-row">
+                <div class="form-group">
+                  <label>دسته‌بندی</label>
+                  <select id="toolCategory">
+                    <option value="vpn">VPN</option>
+                    <option value="security">امنیت</option>
+                    <option value="proxy">پروکسی</option>
+                    <option value="browser">مرورگر</option>
+                    <option value="dns">DNS</option>
+                    <option value="messaging">پیام‌رسان</option>
+                    <option value="other">سایر</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label>آیکن (ایموجی)</label>
+                  <input type="text" id="toolIcon" placeholder="🔒" maxlength="2" />
+                </div>
+              </div>
+              
+              <div class="form-group">
+                <label>لینک دانلود</label>
+                <input type="url" id="toolLink" placeholder="https://..." />
+              </div>
+              
+              <div id="toolAlert"></div>
+              <button type="submit" class="btn btn-red">افزودن ابزار</button>
+              <button type="button" class="btn btn-ghost" onclick="useTemplate('tool')">استفاده از تمپلیت</button>
+            </form>
+          </div>
+
+          <div class="admin-card">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: var(--space-lg);">
+              <h2 style="margin: 0;">ابزارهای موجود</h2>
+              <span id="toolsTotal" class="badge">0</span>
+            </div>
+            <div id="toolsList" class="items-list"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Files Panel -->
+      <div id="filesPanel" class="admin-panel">
+        <div class="admin-card">
+          <h2>مدیریت فایل‌ها</h2>
+          <div class="upload-area" id="uploadArea">
+            <input type="file" id="fileInput" style="display: none;" multiple />
+            <div class="upload-icon">📤</div>
+            <h3>فایل را اینجا بکشید یا کلیک کنید</h3>
+            <p>حداکثر حجم: 25MB • فرمت‌های مجاز: همه</p>
+          </div>
+          <div id="uploadAlert"></div>
+          <div id="uploadProgress" class="upload-progress" style="display: none;">
+            <div class="progress-bar">
+              <div class="progress-fill" id="progressFill"></div>
+            </div>
+            <p id="progressText">در حال آپلود...</p>
+          </div>
+          <div id="filesList" class="files-grid"></div>
+        </div>
+      </div>
+
+      <!-- Templates Panel -->
+      <div id="templatesPanel" class="admin-panel">
+        <div class="admin-card">
+          <h2>تمپلیت‌های آماده</h2>
+          <p style="color: var(--muted); margin-bottom: var(--space-xl);">با استفاده از تمپلیت‌های آماده، سریع‌تر محتوا ایجاد کنید</p>
+          
+          <div class="templates-grid" id="templatesGrid"></div>
+        </div>
+      </div>
+
+      <!-- Settings Panel -->
+      <div id="settingsPanel" class="admin-panel">
+        <div class="admin-card">
+          <h2>تنظیمات سیستم</h2>
+          
+          <div class="settings-section">
+            <h3>اطلاعات محیط (Environment)</h3>
+            <div class="env-info">
+              <div class="env-item">
+                <span class="env-label">ADMIN_USERNAME:</span>
+                <span class="env-value" id="envUsername">***</span>
+              </div>
+              <div class="env-item">
+                <span class="env-label">ADMIN_PASSWORD:</span>
+                <span class="env-value">••••••••</span>
+              </div>
+              <div class="env-item">
+                <span class="env-label">KV Namespace ID:</span>
+                <span class="env-value" id="kvNamespace">بررسی...</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="settings-section">
+            <h3>عملیات خطرناک</h3>
+            <button class="btn btn-ghost" onclick="clearCache()">پاک کردن کش</button>
+            <button class="btn btn-ghost" onclick="exportData()">دانلود بکاپ</button>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script type="module" src="./admin.js"></script>
+</body>
+</html>
