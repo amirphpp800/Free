@@ -112,12 +112,27 @@ function setupPWAInstallPrompt() {
 
 // نمایش نوتیفیکیشن نصب
 function showInstallButton() {
-  // بررسی اینکه قبلاً نمایش داده شده یا نه
-  const hasSeenNotification = localStorage.getItem('pwa-install-notification-shown');
+  // نمایش دکمه در فوتر
+  const footerButton = document.getElementById('installPWAFooter');
+  if (footerButton) {
+    footerButton.style.display = 'flex';
+    footerButton.addEventListener('click', installPWA);
+  }
   
-  if (hasSeenNotification === 'true') {
-    console.log('نوتیفیکیشن نصب قبلاً نمایش داده شده است');
-    return;
+  // بررسی اینکه کاربر روی "بعداً" کلیک کرده یا نه
+  const dismissedTime = localStorage.getItem('pwa-install-dismissed-time');
+  
+  if (dismissedTime) {
+    const oneHour = 60 * 60 * 1000; // 1 ساعت به میلی‌ثانیه
+    const timePassed = Date.now() - parseInt(dismissedTime);
+    
+    if (timePassed < oneHour) {
+      console.log('نوتیفیکیشن نصب هنوز در حالت تاخیر است');
+      return;
+    } else {
+      // 1 ساعت گذشته، پاک کردن تاخیر
+      localStorage.removeItem('pwa-install-dismissed-time');
+    }
   }
   
   // نمایش با تاخیر 3 ثانیه
@@ -151,25 +166,38 @@ function showInstallButton() {
       notification.classList.add('show');
     }, 100);
     
-    // ذخیره اینکه نوتیفیکیشن نمایش داده شده
-    localStorage.setItem('pwa-install-notification-shown', 'true');
-    
-    // بستن خودکار بعد از 15 ثانیه
+    // بستن خودکار بعد از 20 ثانیه
     setTimeout(() => {
       dismissInstallNotification();
-    }, 15000);
+    }, 20000);
   }, 3000);
 }
 
 // مخفی کردن نوتیفیکیشن نصب
 function hideInstallButton() {
-  dismissInstallNotification();
+  // پاک کردن تاخیر چون PWA نصب شد
+  localStorage.removeItem('pwa-install-dismissed-time');
+  
+  const notification = document.getElementById('pwa-install-notification');
+  if (notification) {
+    notification.classList.remove('show');
+    setTimeout(() => notification.remove(), 300);
+  }
+  
+  // مخفی کردن دکمه فوتر
+  const footerButton = document.getElementById('installPWAFooter');
+  if (footerButton) {
+    footerButton.style.display = 'none';
+  }
 }
 
 // بستن نوتیفیکیشن نصب
 window.dismissInstallNotification = function() {
   const notification = document.getElementById('pwa-install-notification');
   if (notification) {
+    // ذخیره زمان کلیک روی "بعداً"
+    localStorage.setItem('pwa-install-dismissed-time', Date.now().toString());
+    
     notification.classList.remove('show');
     setTimeout(() => notification.remove(), 300);
   }
