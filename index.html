@@ -45,7 +45,7 @@
       <nav class="nav" role="navigation" aria-label="منوی اصلی">
         <a href="/">خانه</a>
         <a href="/tools">ابزارها</a>
-        <a href="/blog">وبلاگ</a>
+        <a href="/blog">یادداشت‌ها</a>
         <a href="/about">درباره</a>
       </nav>
       
@@ -109,7 +109,7 @@
     <section id="tools" class="tools">
       <div class="section-head">
         <h3>ابزارهای گیمینگ</h3>
-        <a class="more" href="#">همه</a>
+        <a class="more" href="/tools">همه</a>
       </div>
       <div class="tool-grid">
         
@@ -117,10 +117,21 @@
 
       <div class="section-head mt-32">
         <h3>ابزارهای کاربردی</h3>
-        <a class="more" href="#">همه</a>
+        <a class="more" href="/tools">همه</a>
       </div>
       <div class="tool-grid">
         
+      </div>
+    </section>
+
+    <!-- بخش آخرین یادداشت‌ها -->
+    <section class="tools">
+      <div class="section-head mt-32">
+        <h3>آخرین یادداشت‌ها</h3>
+        <a class="more" href="/blog">همه یادداشت‌ها</a>
+      </div>
+      <div class="home-articles-grid">
+        <!-- بارگذاری خودکار یادداشت‌ها -->
       </div>
     </section>
 
@@ -159,7 +170,7 @@
           <ul>
             <li><a href="/">خانه</a></li>
             <li><a href="/tools">ابزارها</a></li>
-            <li><a href="/blog">وبلاگ</a></li>
+            <li><a href="/blog">یادداشت‌ها</a></li>
             <li><a href="/about">درباره ما</a></li>
           </ul>
         </div>
@@ -204,7 +215,8 @@
     </div>
   </footer>
 
-  <script type="module" src="js/main.js?v=2"></script>
+  <script type="module" src="/js/home-articles.js"></script>
+  <script type="module" src="/js/main.js?v=2"></script>
   <script src="/pwa/pwa-init.js?v=2"></script>
 </body>
 </html>

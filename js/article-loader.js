@@ -1,5 +1,5 @@
 // Article Page Dynamic Loader
-// بارگذاری خودکار محتوای مقاله از API
+// بارگذاری خودکار محتوای یادداشت از API
 
 import { getArticles } from './modules/api.js';
 
@@ -10,7 +10,7 @@ function getArticleIdFromUrl() {
   return match ? match[1] : null;
 }
 
-// بارگذاری مقاله
+// بارگذاری یادداشت
 async function loadArticle() {
   const articleId = getArticleIdFromUrl();
   
@@ -31,7 +31,7 @@ async function loadArticle() {
       return;
     }
     
-    // بارگذاری محتوای مقاله
+    // بارگذاری محتوای یادداشت
     updateArticleHeader(article);
     updateArticleContent(article);
     updateArticleMeta(article);
@@ -170,24 +170,43 @@ function updateArticleMeta(article) {
   }
 }
 
-// بارگذاری مقالات مرتبط
+// بارگذاری یادداشت‌های مرتبط
 function loadRelatedArticles(allArticles, currentArticle) {
   const relatedContainer = document.querySelector('.related-articles');
   if (!relatedContainer) return;
   
-  // فیلتر مقالات مرتبط (همان دسته‌بندی)
+  // فیلتر یادداشت‌های مرتبط (همان دسته‌بندی و منتشر شده)
   const related = allArticles
-    .filter(a => a.id !== currentArticle.id && a.category === currentArticle.category)
+    .filter(a => a.id !== currentArticle.id && a.category === currentArticle.category && a.published)
     .slice(0, 3);
   
   if (related.length === 0) {
-    relatedContainer.innerHTML = '<p style="color: var(--muted); text-align: center;">مقاله مرتبطی یافت نشد</p>';
+    // اگر یادداشت مرتبط در همان دسته نبود، آخرین یادداشت‌ها را نشان بده
+    const latestArticles = allArticles
+      .filter(a => a.id !== currentArticle.id && a.published)
+      .sort((a, b) => new Date(b.date) - new Date(a.date))
+      .slice(0, 3);
+    
+    if (latestArticles.length === 0) {
+      relatedContainer.innerHTML = '<p style="color: var(--muted); text-align: center;">یادداشت مرتبطی یافت نشد</p>';
+      return;
+    }
+    
+    relatedContainer.innerHTML = latestArticles.map((article, index) => `
+      <a href="/article/${article.id}" class="related-item">
+        <div class="related-number">${convertToPersianNumber(index + 1)}</div>
+        <div class="related-content">
+          <h4>${article.title}</h4>
+          <span class="related-date">${new Date(article.date).toLocaleDateString('fa-IR')}</span>
+        </div>
+      </a>
+    `).join('');
     return;
   }
   
   relatedContainer.innerHTML = related.map((article, index) => `
     <a href="/article/${article.id}" class="related-item">
-      <div class="related-number">${index + 1}</div>
+      <div class="related-number">${convertToPersianNumber(index + 1)}</div>
       <div class="related-content">
         <h4>${article.title}</h4>
         <span class="related-date">${new Date(article.date).toLocaleDateString('fa-IR')}</span>
@@ -233,15 +252,21 @@ function calculateReadingTime(content) {
   return Math.ceil(words / wordsPerMinute);
 }
 
+// تبدیل اعداد انگلیسی به فارسی
+function convertToPersianNumber(num) {
+  const persianDigits = ['۰', '۱', '۲', '۳', '۴', '۵', '۶', '۷', '۸', '۹'];
+  return String(num).replace(/\d/g, digit => persianDigits[digit]);
+}
+
 // نمایش خطا
 function showArticleNotFound() {
-  document.querySelector('.article-title').textContent = 'مقاله یافت نشد';
-  document.querySelector('.article-body').innerHTML = '<p>متأسفانه مقاله مورد نظر یافت نشد.</p>';
+  document.querySelector('.article-title').textContent = 'یادداشت یافت نشد';
+  document.querySelector('.article-body').innerHTML = '<p>متأسفانه یادداشت مورد نظر یافت نشد.</p>';
 }
 
 function showArticleError() {
   document.querySelector('.article-title').textContent = 'خطا در بارگذاری';
-  document.querySelector('.article-body').innerHTML = '<p>خطا در بارگذاری مقاله. لطفاً دوباره تلاش کنید.</p>';
+  document.querySelector('.article-body').innerHTML = '<p>خطا در بارگذاری یادداشت. لطفاً دوباره تلاش کنید.</p>';
 }
 
 // توابع اشتراک‌گذاری
