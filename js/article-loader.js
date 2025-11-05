@@ -84,12 +84,8 @@ function updateArticleHeader(article) {
   if (article.image) {
     const headerEl = document.querySelector('.article-header');
     if (headerEl) {
-      headerEl.style.backgroundImage = `
-        linear-gradient(135deg, rgba(157, 9, 19, 0.15), rgba(10, 10, 15, 0.9)),
-        url(${article.image})
-      `;
-      headerEl.style.backgroundSize = 'cover';
-      headerEl.style.backgroundPosition = 'center';
+      headerEl.setAttribute('data-image', 'true');
+      headerEl.style.setProperty('--header-image', `url(${article.image})`);
     }
   }
 }
