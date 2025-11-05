@@ -151,6 +151,19 @@ function showInstallButton(isIOSDevice = false) {
     });
   }
   
+  // نمایش دکمه در منوی موبایل
+  const mobileButton = document.getElementById('installPWAMobile');
+  if (mobileButton) {
+    mobileButton.style.display = 'flex';
+    mobileButton.addEventListener('click', () => {
+      if (isIOSDevice) {
+        showIOSInstallInstructions();
+      } else {
+        installPWA();
+      }
+    });
+  }
+  
   // حذف سیستم تاخیر - نوتیفیکیشن در هر ریلود نمایش داده می‌شود
   // localStorage.removeItem('pwa-install-dismissed-time'); // پاک کردن تاخیر قدیمی
   
@@ -222,6 +235,12 @@ function hideInstallButton() {
   const footerButton = document.getElementById('installPWAFooter');
   if (footerButton) {
     footerButton.style.display = 'none';
+  }
+  
+  // مخفی کردن دکمه موبایل
+  const mobileButton = document.getElementById('installPWAMobile');
+  if (mobileButton) {
+    mobileButton.style.display = 'none';
   }
 }
 

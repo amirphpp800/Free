@@ -24,19 +24,11 @@ export async function onRequest(context) {
     const cookie = context.request.headers.get('Cookie') || '';
     const isAuthenticated = cookie.includes('admin_token=');
     
-    // Serve admin login page for /admin or /admin/
-    if (pathname === '/admin' || pathname === '/admin/') {
-      // Redirect to ensure trailing slash
-      if (pathname === '/admin') {
-        return Response.redirect(`${url.origin}/admin/`, 301);
-      }
-      // Continue to serve the admin page
-    }
-    
-    // Protect admin assets (CSS, JS) - allow if accessing login page
-    if (pathname.startsWith('/admin/admin.')) {
-      // Allow CSS and JS files
-    } else if (!isAuthenticated && pathname !== '/admin/') {
+    // Allow access to admin login page and assets
+    if (pathname === '/admin' || pathname === '/admin/' || pathname === '/admin/login' || 
+        pathname.startsWith('/admin/admin.') || pathname.startsWith('/admin/article-manager.')) {
+      // Allow these paths without authentication
+    } else if (!isAuthenticated) {
       // Redirect to login if not authenticated
       return Response.redirect(`${url.origin}/admin/`, 302);
     }

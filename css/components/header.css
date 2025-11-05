@@ -186,6 +186,11 @@
   background: linear-gradient(90deg, var(--red), var(--orange));
 }
 
+/* Hide mobile install button on desktop */
+.mobile-install-btn {
+  display: none !important;
+}
+
 /* Responsive */
 @media (max-width: 768px) {
   .mobile-menu-toggle {
@@ -218,6 +223,16 @@
     width: 100%;
     text-align: center;
     padding: var(--space-md);
+  }
+  
+  .mobile-install-btn {
+    width: 100%;
+    justify-content: center;
+  }
+  
+  /* Show mobile install button when nav is active and button should be visible */
+  .nav.active .mobile-install-btn[style*="display: flex"] {
+    display: flex !important;
   }
 }
 

@@ -138,8 +138,13 @@ document.getElementById('loginForm')?.addEventListener('submit', async (e) => {
     const data = await response.json();
     
     if (data.success) {
+      // Set cookie for middleware authentication
+      document.cookie = `admin_token=${data.token}; path=/; max-age=86400; SameSite=Strict`;
+      
+      // Set sessionStorage for client-side state
       sessionStorage.setItem('admin_authenticated', 'true');
       sessionStorage.setItem('admin_token', data.token);
+      
       showAdminPanel();
     } else {
       showAlert('loginAlert', data.message || 'نام کاربری یا رمز عبور اشتباه است', 'error');
@@ -152,7 +157,12 @@ document.getElementById('loginForm')?.addEventListener('submit', async (e) => {
 // Logout
 window.logout = function() {
   if (confirm('آیا مطمئن هستید؟')) {
+    // Clear cookie
+    document.cookie = 'admin_token=; path=/; max-age=0';
+    
+    // Clear sessionStorage
     sessionStorage.clear();
+    
     showLoginScreen();
   }
 };
