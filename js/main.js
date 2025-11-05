@@ -4,11 +4,15 @@
 
 import { initNavigation } from './modules/navigation.js';
 import { initAnimations } from './modules/animations.js';
+import { loadAllContent } from './modules/content-loader.js';
 
 // Initialize when DOM is ready
 document.addEventListener('DOMContentLoaded', () => {
   initNavigation();
   initAnimations();
+  
+  // بارگذاری خودکار محتوا
+  loadAllContent();
   
   // Smooth scroll for anchor links
   document.querySelectorAll('a[href^="#"]').forEach(anchor => {

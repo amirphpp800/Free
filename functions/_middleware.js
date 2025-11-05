@@ -21,19 +21,24 @@ export async function onRequest(context) {
 
   // Admin route protection
   if (pathname.startsWith('/admin')) {
-    // Check authentication for admin routes (except login page)
     const cookie = context.request.headers.get('Cookie') || '';
     const isAuthenticated = cookie.includes('admin_token=');
     
-    // Allow access to login page
+    // Serve admin login page for /admin or /admin/
     if (pathname === '/admin' || pathname === '/admin/') {
-      // Serve admin login page
-      return context.env.ASSETS.fetch(new Request(`${url.origin}/admin/index.html`, context.request));
+      // Redirect to ensure trailing slash
+      if (pathname === '/admin') {
+        return Response.redirect(`${url.origin}/admin/`, 301);
+      }
+      // Continue to serve the admin page
     }
     
-    // Protect other admin routes
-    if (!isAuthenticated && !pathname.startsWith('/admin/admin.')) {
-      return Response.redirect(`${url.origin}/admin`, 302);
+    // Protect admin assets (CSS, JS) - allow if accessing login page
+    if (pathname.startsWith('/admin/admin.')) {
+      // Allow CSS and JS files
+    } else if (!isAuthenticated && pathname !== '/admin/') {
+      // Redirect to login if not authenticated
+      return Response.redirect(`${url.origin}/admin/`, 302);
     }
   }
 

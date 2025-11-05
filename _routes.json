@@ -1,12 +1,9 @@
 {
   "version": 1,
   "include": [
-    "/*"
+    "/api/*",
+    "/admin",
+    "/admin/*"
   ],
-  "exclude": [
-    "/assest/*",
-    "/css/*",
-    "/js/*",
-    "/pwa/*"
-  ]
+  "exclude": []
 }

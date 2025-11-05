@@ -172,52 +172,111 @@
               
               <div class="form-group">
                 <label>خلاصه مقاله</label>
-                <textarea id="articleExcerpt" rows="2" placeholder="خلاصه‌ای کوتاه از محتوا (برای SEO)"></textarea>
               </div>
               
               <div class="form-group">
-                <label>محتوای کامل *</label>
-                <textarea id="articleContent" rows="10" required placeholder="محتوای کامل مقاله با فرمت Markdown"></textarea>
+                <label>خلاصه مقاله (Excerpt)</label>
+                <textarea id="articleExcerpt" rows="3" required placeholder="خلاصه‌ای کوتاه و جذاب از محتوای مقاله..."></textarea>
+              </div>
+              
+              <div class="form-group">
+                <label>محتوای مقاله (Markdown)</label>
+                <div class="editor-toolbar">
+                  <button type="button" class="editor-btn" onclick="insertMarkdown('h2')" title="عنوان">
+                    <strong>H2</strong>
+                  </button>
+                  <button type="button" class="editor-btn" onclick="insertMarkdown('h3')" title="زیرعنوان">
+                    <strong>H3</strong>
+                  </button>
+                  <button type="button" class="editor-btn" onclick="insertMarkdown('bold')" title="ضخیم">
+                    <strong>B</strong>
+                  </button>
+                  <button type="button" class="editor-btn" onclick="insertMarkdown('italic')" title="کج">
+                    <em>I</em>
+                  </button>
+                  <button type="button" class="editor-btn" onclick="insertMarkdown('list')" title="لیست">
+                    ☰
+                  </button>
+                  <button type="button" class="editor-btn" onclick="insertMarkdown('link')" title="لینک">
+                    🔗
+                  </button>
+                  <button type="button" class="editor-btn" onclick="insertMarkdown('image')" title="تصویر">
+                    🖼️
+                  </button>
+                  <button type="button" class="editor-btn" onclick="insertMarkdown('quote')" title="نقل قول">
+                    "
+                  </button>
+                  <button type="button" class="editor-btn" onclick="insertMarkdown('code')" title="کد">
+                    &lt;/&gt;
+                  </button>
+                </div>
+                <textarea id="articleContent" rows="15" required placeholder="# عنوان اصلی&#10;&#10;## بخش اول&#10;&#10;متن شما...&#10;&#10;![توضیح تصویر](/assest/images/photo.png)&#10;*توضیح زیر تصویر*"></textarea>
+                <div class="editor-help">
+                  <details>
+                    <summary>راهنمای نوشتن (Markdown)</summary>
+                    <div class="help-content">
+                      <p><code># عنوان</code> → عنوان اصلی</p>
+                      <p><code>## عنوان</code> → عنوان بخش</p>
+                      <p><code>### زیرعنوان</code> → زیرعنوان</p>
+                      <p><code>**متن ضخیم**</code> → <strong>متن ضخیم</strong></p>
+                      <p><code>*متن کج*</code> → <em>متن کج</em></p>
+                      <p><code>- آیتم لیست</code> → لیست</p>
+                      <p><code>[متن لینک](url)</code> → لینک</p>
+                      <p><code>![توضیح](url)</code> → تصویر</p>
+                      <p><code>*توضیح زیر تصویر*</code> → کپشن</p>
+                    </div>
+                  </details>
+                </div>
               </div>
               
               <div class="form-row">
                 <div class="form-group">
                   <label>دسته‌بندی</label>
-                  <select id="articleCategory">
-                    <option value="فناوری">فناوری</option>
-                    <option value="امنیت">امنیت</option>
-                    <option value="VPN">VPN</option>
+                  <select id="articleCategory" required>
+                    <option value="">انتخاب کنید</option>
+                    <option value="تحلیل">تحلیل</option>
                     <option value="آموزش">آموزش</option>
                     <option value="اخبار">اخبار</option>
-                    <option value="عمومی">عمومی</option>
+                    <option value="امنیت">امنیت</option>
+                    <option value="فناوری">فناوری</option>
                   </select>
                 </div>
                 <div class="form-group">
                   <label>نویسنده</label>
-                  <input type="text" id="articleAuthor" placeholder="نام نویسنده" value="ابزارستان" />
+                  <input type="text" id="articleAuthor" value="ابزارستان" required />
                 </div>
               </div>
               
               <div class="form-group">
-                <label>تگ‌ها (با کاما جدا کنید)</label>
-                <input type="text" id="articleTags" placeholder="vpn, امنیت, فیلترشکن, ..." />
+                <label>برچسب‌ها (با کاما جدا کنید)</label>
+                <input type="text" id="articleTags" placeholder="مثال: اینترنت, امنیت, فیلترینگ" />
               </div>
               
               <div class="form-group">
-                <label>لینک تصویر شاخص</label>
-                <input type="url" id="articleImage" placeholder="https://example.com/image.jpg" />
+                <label>تصویر شاخص</label>
+                <div class="image-input-group">
+                  <input type="text" id="articleImage" placeholder="/assest/images/cover.png" />
+                  <button type="button" class="btn btn-ghost btn-sm" onclick="selectImageFromFiles()">انتخاب از فایل‌ها</button>
+                </div>
+                <small style="color: var(--muted); display: block; margin-top: 4px;">
+                  تصاویر موجود: war.png, sms.png, ai.png, audio.png, head-banner.png
+                </small>
               </div>
               
               <div class="form-group">
                 <label style="display: flex; align-items: center; gap: 8px;">
                   <input type="checkbox" id="articlePublished" checked />
-                  <span>انتشار فوری</span>
+                  انتشار فوری
                 </label>
               </div>
               
-              <div id="articleAlert"></div>
-              <button type="submit" class="btn btn-red">انتشار مقاله</button>
-              <button type="button" class="btn btn-ghost" onclick="useTemplate('article')">استفاده از تمپلیت</button>
+              <div style="display: flex; gap: var(--space-sm);">
+                <button type="submit" class="btn btn-red">
+                  <span id="articleSubmitText">انتشار مقاله</span>
+                </button>
+                <button type="button" class="btn btn-ghost" onclick="previewArticle()">پیش‌نمایش</button>
+                <button type="button" class="btn btn-ghost" onclick="resetArticleForm()" id="cancelEditBtn" style="display: none;">انصراف</button>
+              </div>
             </form>
           </div>
 
@@ -352,5 +411,6 @@
   </div>
 
   <script type="module" src="./admin.js"></script>
+  <script src="./article-manager.js"></script>
 </body>
 </html>
