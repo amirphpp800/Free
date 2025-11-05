@@ -95,12 +95,32 @@ window.dismissUpdateNotification = function() {
 // مدیریت نصب PWA
 let deferredPrompt;
 
+// تشخیص دستگاه
+function isMobile() {
+  return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+}
+
+function isIOS() {
+  return /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+}
+
+function isInStandaloneMode() {
+  return window.matchMedia('(display-mode: standalone)').matches || 
+         window.navigator.standalone === true;
+}
+
 function setupPWAInstallPrompt() {
+  // برای Android و مرورگرهای پشتیبانی‌کننده
   window.addEventListener('beforeinstallprompt', (e) => {
     e.preventDefault();
     deferredPrompt = e;
     showInstallButton();
   });
+
+  // برای iOS - نمایش دستورالعمل نصب دستی
+  if (isIOS() && !isInStandaloneMode()) {
+    showInstallButton(true); // true = iOS mode
+  }
 
   window.addEventListener('appinstalled', () => {
     console.log('✅ PWA installed successfully');
@@ -111,12 +131,18 @@ function setupPWAInstallPrompt() {
 }
 
 // نمایش نوتیفیکیشن نصب
-function showInstallButton() {
+function showInstallButton(isIOSDevice = false) {
   // نمایش دکمه در فوتر
   const footerButton = document.getElementById('installPWAFooter');
   if (footerButton) {
     footerButton.style.display = 'flex';
-    footerButton.addEventListener('click', installPWA);
+    footerButton.addEventListener('click', () => {
+      if (isIOSDevice) {
+        showIOSInstallInstructions();
+      } else {
+        installPWA();
+      }
+    });
   }
   
   // بررسی اینکه کاربر روی "بعداً" کلیک کرده یا نه
@@ -135,11 +161,26 @@ function showInstallButton() {
     }
   }
   
+  // فقط در موبایل نمایش بده
+  if (!isMobile()) {
+    console.log('دستگاه موبایل نیست، نوتیفیکیشن نمایش داده نمی‌شود');
+    return;
+  }
+  
   // نمایش با تاخیر 3 ثانیه
   setTimeout(() => {
     const notification = document.createElement('div');
     notification.id = 'pwa-install-notification';
     notification.className = 'pwa-install-notification';
+    
+    let installButtonText = 'نصب';
+    let installDescription = 'برای دسترسی سریع‌تر و استفاده آفلاین';
+    
+    if (isIOSDevice) {
+      installButtonText = 'راهنما';
+      installDescription = 'نحوه نصب روی صفحه اصلی';
+    }
+    
     notification.innerHTML = `
       <div class="pwa-install-content">
         <div class="pwa-install-icon">
@@ -151,10 +192,10 @@ function showInstallButton() {
         </div>
         <div class="pwa-install-text">
           <strong>نصب اپلیکیشن ابزارستان</strong>
-          <p>برای دسترسی سریع‌تر و استفاده آفلاین</p>
+          <p>${installDescription}</p>
         </div>
         <div class="pwa-install-actions">
-          <button onclick="installPWA()" class="btn btn-red btn-sm">نصب</button>
+          <button onclick="${isIOSDevice ? 'showIOSInstallInstructions()' : 'installPWA()'}" class="btn btn-red btn-sm">${installButtonText}</button>
           <button onclick="dismissInstallNotification()" class="btn btn-ghost btn-sm">بعداً</button>
         </div>
         <button onclick="dismissInstallNotification()" class="pwa-install-close" aria-label="بستن">×</button>
@@ -203,9 +244,54 @@ window.dismissInstallNotification = function() {
   }
 };
 
+// نمایش دستورالعمل نصب برای iOS
+function showIOSInstallInstructions() {
+  const modal = document.createElement('div');
+  modal.className = 'pwa-ios-modal';
+  modal.innerHTML = `
+    <div class="pwa-ios-modal-content">
+      <button onclick="closeIOSModal()" class="pwa-ios-close">×</button>
+      <h3>نصب ابزارستان روی iOS</h3>
+      <div class="pwa-ios-steps">
+        <div class="pwa-ios-step">
+          <div class="pwa-ios-step-number">۱</div>
+          <p>روی دکمه <strong>اشتراک‌گذاری</strong> (مربع با فلش) در پایین صفحه کلیک کنید</p>
+        </div>
+        <div class="pwa-ios-step">
+          <div class="pwa-ios-step-number">۲</div>
+          <p>گزینه <strong>"Add to Home Screen"</strong> را انتخاب کنید</p>
+        </div>
+        <div class="pwa-ios-step">
+          <div class="pwa-ios-step-number">۳</div>
+          <p>روی <strong>"Add"</strong> کلیک کنید تا اپلیکیشن نصب شود</p>
+        </div>
+      </div>
+      <button onclick="closeIOSModal()" class="btn btn-red">متوجه شدم</button>
+    </div>
+  `;
+  document.body.appendChild(modal);
+  setTimeout(() => modal.classList.add('show'), 10);
+}
+
+window.showIOSInstallInstructions = showIOSInstallInstructions;
+
+window.closeIOSModal = function() {
+  const modal = document.querySelector('.pwa-ios-modal');
+  if (modal) {
+    modal.classList.remove('show');
+    setTimeout(() => modal.remove(), 300);
+  }
+};
+
 // نصب PWA
 async function installPWA() {
   if (!deferredPrompt) {
+    // اگر iOS است، راهنما را نمایش بده
+    if (isIOS()) {
+      showIOSInstallInstructions();
+    } else {
+      showToast('نصب در این مرورگر پشتیبانی نمی‌شود', 'warning');
+    }
     return;
   }
 
@@ -221,6 +307,8 @@ async function installPWA() {
   deferredPrompt = null;
   hideInstallButton();
 }
+
+window.installPWA = installPWA;
 
 // بررسی به‌روزرسانی‌های دوره‌ای
 function checkForUpdates() {
@@ -270,6 +358,9 @@ function isPWAInstalled() {
 if (isPWAInstalled()) {
   console.log('✅ Running as PWA');
   document.documentElement.classList.add('pwa-installed');
+} else {
+  console.log('📱 Device:', isMobile() ? 'Mobile' : 'Desktop');
+  console.log('🍎 iOS:', isIOS() ? 'Yes' : 'No');
 }
 
 // Export برای استفاده در سایر فایل‌ها

@@ -4,8 +4,9 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>درباره ما - ابزارستان</title>
-  <meta name="description" content="درباره ابزارستان و تیم ما" />
+  <meta name="description" content="درباره ابزارستان - مرجع ابزارهای گیمینگ و کاربردی" />
   <link rel="stylesheet" href="../css/main.css" />
+  <link rel="stylesheet" href="/pwa/pwa-styles.css" />
   
   <!-- PWA -->
   <link rel="manifest" href="/pwa/manifest.json" />
@@ -74,8 +75,20 @@
         </div>
       </div>
       <div class="footer-bottom">
-        <p>تمامی حقوق محفوظ است © 1404 ابزارستان</p>
-        <p class="footer-ai">✨ توسعه کاملا با هوش مصنوعی</p>
+        <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem;">
+          <div>
+            <p style="margin: 0;">تمامی حقوق محفوظ است © 1404 ابزارستان</p>
+            <p class="footer-ai" style="margin: 0.25rem 0 0 0;">✨ توسعه کاملا با هوش مصنوعی</p>
+          </div>
+          <button id="installPWAFooter" class="btn btn-red" style="display: none; gap: 0.5rem; background: linear-gradient(135deg, rgba(157, 9, 19, 0.2), rgba(157, 9, 19, 0.1)); border: 1px solid rgba(157, 9, 19, 0.4);">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+              <polyline points="7 10 12 15 17 10"></polyline>
+              <line x1="12" y1="15" x2="12" y2="3"></line>
+            </svg>
+            نصب اپلیکیشن
+          </button>
+        </div>
       </div>
     </div>
   </footer>

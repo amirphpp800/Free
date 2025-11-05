@@ -363,3 +363,138 @@
   min-width: 18px;
   text-align: center;
 }
+
+/* مودال راهنمای نصب iOS */
+.pwa-ios-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(4px);
+  z-index: 10002;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  padding: var(--space-md);
+}
+
+.pwa-ios-modal.show {
+  opacity: 1;
+}
+
+.pwa-ios-modal-content {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  padding: var(--space-xl);
+  max-width: 500px;
+  width: 100%;
+  position: relative;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
+}
+
+.pwa-ios-close {
+  position: absolute;
+  top: var(--space-md);
+  left: var(--space-md);
+  width: 32px;
+  height: 32px;
+  background: var(--panel-2);
+  border: 1px solid var(--line);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 1.5rem;
+  color: var(--muted);
+  transition: all 0.2s ease;
+}
+
+.pwa-ios-close:hover {
+  background: var(--bg-soft);
+  color: var(--txt);
+  transform: scale(1.1);
+}
+
+.pwa-ios-modal-content h3 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--txt);
+  margin: 0 0 var(--space-lg) 0;
+  text-align: center;
+}
+
+.pwa-ios-steps {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+  margin-bottom: var(--space-xl);
+}
+
+.pwa-ios-step {
+  display: flex;
+  gap: var(--space-md);
+  align-items: flex-start;
+  padding: var(--space-md);
+  background: var(--panel-2);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+}
+
+.pwa-ios-step-number {
+  width: 32px;
+  height: 32px;
+  background: linear-gradient(135deg, #9D0913, #c00b17);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  color: white;
+  flex-shrink: 0;
+}
+
+.pwa-ios-step p {
+  margin: 0;
+  color: var(--txt);
+  line-height: 1.6;
+  flex: 1;
+}
+
+.pwa-ios-step strong {
+  color: var(--orange);
+}
+
+.pwa-ios-modal-content .btn {
+  width: 100%;
+  justify-content: center;
+}
+
+@media (max-width: 600px) {
+  .pwa-ios-modal-content {
+    padding: var(--space-lg);
+  }
+  
+  .pwa-ios-modal-content h3 {
+    font-size: 1.25rem;
+  }
+  
+  .pwa-ios-step {
+    padding: var(--space-sm);
+  }
+  
+  .pwa-ios-step-number {
+    width: 28px;
+    height: 28px;
+    font-size: 0.9rem;
+  }
+  
+  .pwa-ios-step p {
+    font-size: 0.9rem;
+  }
+}
