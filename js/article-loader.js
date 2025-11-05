@@ -95,14 +95,14 @@ function updateArticleContent(article) {
   const contentEl = document.querySelector('.article-body');
   if (!contentEl) return;
   
-  // تبدیل Markdown به HTML (ساده)
+  // تبدیل Markdown به HTML با کلاس‌های استایل
   let htmlContent = article.content
     .replace(/\n\n/g, '</p><p>')
     .replace(/\n/g, '<br>')
-    .replace(/^# (.+)$/gm, '<h2>$1</h2>')
-    .replace(/^## (.+)$/gm, '<h3>$1</h3>')
-    .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
-    .replace(/\*(.+?)\*/g, '<em>$1</em>');
+    .replace(/^# (.+)$/gm, '<h2 class="article-heading">$1</h2>')
+    .replace(/^## (.+)$/gm, '<h3 class="article-subheading">$1</h3>')
+    .replace(/\*\*(.+?)\*\*/g, '<strong class="article-strong">$1</strong>')
+    .replace(/\*(.+?)\*/g, '<em class="article-em">$1</em>');
   
   contentEl.innerHTML = `
     <p>${htmlContent}</p>
