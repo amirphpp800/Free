@@ -16,9 +16,9 @@ const STATIC_ASSETS = [
   '/css/components/buttons.css',
   '/css/components/cards.css',
   '/js/main.js',
-  '/assest/logo/logo.svg',
-  '/assest/images/head-banner.png',
-  '/assest/Font/font.css',
+  '/assets/logo/logo.svg',
+  '/assets/images/head-banner.png',
+  '/assets/Font/font.css',
   '/pwa/manifest.json',
   '/pwa/icons/256.png',
   '/pwa/icons/512.png'

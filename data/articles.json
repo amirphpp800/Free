@@ -10,7 +10,7 @@
       "tags": ["اینترنت", "امنیت", "سیاست‌گذاری", "فیلترینگ"],
       "author": "ابزارستان",
       "date": "2024-11-05T00:00:00Z",
-      "image": "/assest/images/war.png",
+      "image": "/assets/images/war.png",
       "published": true,
       "views": 0
     },
@@ -24,7 +24,7 @@
       "tags": ["پیامک", "سانسور", "حریم خصوصی", "ارتباطات"],
       "author": "ابزارستان",
       "date": "2024-11-04T00:00:00Z",
-      "image": "/assest/images/sms.png",
+      "image": "/assets/images/sms.png",
       "published": true,
       "views": 0
     },
@@ -38,7 +38,7 @@
       "tags": ["هوش مصنوعی", "نوآوری", "فناوری", "سیاست‌گذاری"],
       "author": "ابزارستان",
       "date": "2024-11-03T00:00:00Z",
-      "image": "/assest/images/ai.png",
+      "image": "/assets/images/ai.png",
       "published": true,
       "views": 0
     }

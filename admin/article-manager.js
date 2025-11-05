@@ -40,7 +40,7 @@ window.insertMarkdown = function(type) {
     case 'image':
       const imageName = prompt('نام فایل تصویر (مثال: photo.png):');
       if (imageName) {
-        insertion = `![توضیح تصویر](/assest/images/${imageName})\n*کپشن زیر تصویر*`;
+        insertion = `![توضیح تصویر](/assets/images/${imageName})\n*کپشن زیر تصویر*`;
       }
       break;
     case 'quote':
@@ -69,7 +69,7 @@ window.selectImageFromFiles = function() {
   const selection = prompt(`تصاویر موجود:\n${imageList}\n\nنام فایل را وارد کنید:`);
   
   if (selection) {
-    document.getElementById('articleImage').value = `/assest/images/${selection}`;
+    document.getElementById('articleImage').value = `/assets/images/${selection}`;
   }
 };
 
@@ -336,7 +336,7 @@ document.getElementById('articleForm')?.addEventListener('submit', async functio
     category: document.getElementById('articleCategory').value,
     author: document.getElementById('articleAuthor').value,
     tags: document.getElementById('articleTags').value.split(',').map(t => t.trim()).filter(t => t),
-    image: document.getElementById('articleImage').value || '/assest/images/default.png',
+    image: document.getElementById('articleImage').value || '/assets/images/default.png',
     published: document.getElementById('articlePublished').checked,
     date: new Date().toISOString(),
     views: 0
